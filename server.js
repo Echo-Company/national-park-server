@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 
 const getParks = require('./modules/getParks');
 const getActivities = require('./modules/getActivities');
-const getParksX = require('./modules/getParksX.js');
+const getParksX = require('./modules/getParksX');
 
 const app = express();
 
