@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 
 const getParks = require('./modules/getParks');
 const getActivities = require('./modules/getActivities');
+const getParksX = require('./modules/getParksX.js');
 
 const app = express();
 
@@ -27,6 +28,7 @@ const PORT = process.env.PORT || 3001;
 //routes
 app.get('/parks', getParks);
 app.get('/activities', getActivities);
+app.get('/parks', getParksX);
 
 
 app.get('*', (request, response) => {
