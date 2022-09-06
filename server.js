@@ -1,11 +1,13 @@
 'use strict';
 
 require('dotenv').config();
-const express  = require('express');
+const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const Fav = require('./models/fav')
 
 const getParks = require('./modules/getParks');
+
 const getActivities = require('./modules/getActivities');
 const getParksX = require('./modules/getParksX.js');
 
@@ -30,6 +32,32 @@ app.get('/parks', getParks);
 app.get('/activities', getActivities);
 app.get('/parks', getParksX);
 
+
+
+app.get('/favs', handleGetFavs)
+
+async function handleGetFavs(req, res) {
+  console.log("object");
+  try {
+    const favsFromDb = await Fav.find({ email: "2008nv@gmail.com" });
+     res.status(200).send(favsFromDb);
+    } catch (e) {
+    console.error(e);
+    res.status(500).send('server error');
+  }
+}
+
+app.post('/favs', handlePostParks)
+
+async function handlePostParks(req, res) {
+  try {
+    console.log(res)
+    const newFav = await Fav.create({ ...req.body })
+    res.status(201).send(newFav)
+  } catch (e) {
+    res.status(500).send('server error');
+  }
+}
 
 app.get('*', (request, response) => {
   response.status(404).send('Not availabe');
