@@ -6,7 +6,7 @@ let cache = {};
 
 async function getParks(request, response) {
   let park = request.data;
-  const parkList = `https://developer.nps.gov/api/v1/parks?limit=600&api_key=${process.env.NP_API_KEY}`;
+  const parkList = `https://developer.nps.gov/api/v1/parks?limit=20&api_key=${process.env.NP_API_KEY}`;
   try{
     let key = park + 'park list';
     if (cache[key] && (Date.now() - cache[key].timeStamp < 9e+7)) {
@@ -16,6 +16,7 @@ async function getParks(request, response) {
       console.log('cache missed, no park present');
       const parkResponse = await axios.get(parkList);
       const parkArray = parkResponse.data.data.map(parkObject => new Park(parkObject));
+      // const parkArray = parkResponse.data.data.map(park => park );
 
       cache[key] = {
         data: parkArray,
@@ -24,7 +25,7 @@ async function getParks(request, response) {
       response.status(200).send(parkArray);
     }
   } catch (error) {
-    console.loeg('error messis is: ', error);
+    console.log('error messis is: ', error);
     response.status(500).send('Server Error');
   }
 }
@@ -36,6 +37,8 @@ class Park {
     this.parkCode = parkObject.parkCode;
     this.latitude = parkObject.latitude;
     this.longitude = parkObject.longitude;
+    this.activities = parkObject.activities;
+    this.url = parkObject.url;
   }
 }
 
