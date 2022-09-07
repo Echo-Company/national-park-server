@@ -6,13 +6,13 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const Fav = require('./models/fav');
 
+
 // const getParks = require('./modules/getParks');
 
 const getActivities = require('./modules/getActivities');
 const getParksX = require('./modules/getParksX');
 
 const app = express();
-
 app.use(cors());
 app.use(express.json());
 
@@ -26,20 +26,16 @@ db.once('open', function () {
 
 const PORT = process.env.PORT || 3001;
 
-
 //routes
 // app.get('/parks', getParks);
 app.get('/activities', getActivities);
 app.get('/parks', getParksX);
-
-
-
-app.get('/favs', handleGetFavs)
+app.get('/favs', handleGetFavs);
 
 async function handleGetFavs(req, res) {
-  console.log("getting faves for", req.query);
+  console.log("getting faves for",req.query.email)
   try {
-    const favsFromDb = await Fav.find({ email: req.query.email});
+    const favsFromDb = await Fav.find({ email: req.query.email });
      res.status(200).send(favsFromDb);
     } catch (e) {
     console.error(e);
@@ -48,7 +44,6 @@ async function handleGetFavs(req, res) {
 }
 
 app.post('/favs', handlePostParks)
-
 async function handlePostParks(req, res) {
   try {
     console.log(res)
