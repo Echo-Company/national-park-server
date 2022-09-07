@@ -34,7 +34,8 @@ async function getParksX(request, response, next) {
 class Parks {
   constructor(parkObject) {
     this.parks = parkObject.fullName;
-    // this.description = parkObject.description;
+    this.description = parkObject.description;
+    this.image = parkObject.images[0].url;
     // this.parkCode = parkObject.parkCode;
     // this.latitude = parkObject.latitude;
     // this.longitude = parkObject.longitude;

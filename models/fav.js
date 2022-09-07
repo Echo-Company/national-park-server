@@ -7,8 +7,8 @@ const favSchema = new Schema({
   parks: {type: String, required: true},
   description: {type: String, required: true},
   image:{type:String, required: false},
-  plannedFor:  {type: Date},
-  email: {type:String},
+  plannedFor:  {type: Date, required: false},
+  email: {type:String, required: false }
 });
 // Schema defines the shape of the data
 
