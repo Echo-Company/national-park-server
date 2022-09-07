@@ -10,7 +10,7 @@ async function getParksX(request, response, next) {
 
   const limit = 50;
   console.log('state', state);
-  const url = `https://developer.nps.gov/api/v1/parks?stateCode=${state}&limit=${limit}&api_key=${process.env.NPS_API_KEY}`;
+  const url = `https://developer.nps.gov/api/v1/parks?stateCode=${state}&limit=${limit}&api_key=${process.env.NP_API_KEY}`;
   //https://developer.nps.gov/api/v1/parks?q=Biking&stateCode=ca&limit=3&api_key=qwJ7GoP7sWgRkS1TYC5CuMo1LokSbs6UR9Hkc3pB
 
   try {

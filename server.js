@@ -4,9 +4,9 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const Fav = require('./models/fav')
+const Fav = require('./models/fav');
 
-const getParks = require('./modules/getParks');
+// const getParks = require('./modules/getParks');
 
 const getActivities = require('./modules/getActivities');
 const getParksX = require('./modules/getParksX');
@@ -28,7 +28,7 @@ const PORT = process.env.PORT || 3001;
 
 
 //routes
-app.get('/parks', getParks);
+// app.get('/parks', getParks);
 app.get('/activities', getActivities);
 app.get('/parks', getParksX);
 
@@ -37,13 +37,13 @@ app.get('/parks', getParksX);
 app.get('/favs', handleGetFavs)
 
 async function handleGetFavs(req, res) {
-  console.log("object");
+  console.log("getting faves for", req.query);
   try {
-    const favsFromDb = await Fav.find({ email: "2008nv@gmail.com" });
+    const favsFromDb = await Fav.find({ email: req.query.email});
      res.status(200).send(favsFromDb);
     } catch (e) {
     console.error(e);
-    res.status(500).send('server error');
+    res.status(500).send('server error', error);
   }
 }
 
@@ -55,12 +55,12 @@ async function handlePostParks(req, res) {
     const newFav = await Fav.create({ ...req.body })
     res.status(201).send(newFav)
   } catch (e) {
-    res.status(500).send('server error');
+    res.status(500).send('server error', error);
   }
 }
 
 app.get('*', (request, response) => {
-  response.status(404).send('Not availabe');
+  response.status(404).send('Not available');
 });
 
 // ERROR
