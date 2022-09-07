@@ -33,24 +33,25 @@ app.get('/parks', getParksX);
 app.get('/favs', handleGetFavs);
 
 async function handleGetFavs(req, res) {
-  console.log("getting faves for",req.query.email)
+  console.log('getting faves for', req.query.email);
   try {
     const favsFromDb = await Fav.find({ email: req.query.email });
-     res.status(200).send(favsFromDb);
-    } catch (e) {
+    res.status(200).send(favsFromDb);
+  } catch (e) {
     console.error(e);
-    res.status(500).send('server error', error);
+    res.status(500).send('server error', e);
   }
 }
 
-app.post('/favs', handlePostParks)
+app.post('/favs', handlePostParks);
 async function handlePostParks(req, res) {
   try {
-    console.log(res)
-    const newFav = await Fav.create({ ...req.body })
-    res.status(201).send(newFav)
+    console.log('req', req);
+    console.log('req.body', req.body);
+    const newFav = await Fav.create(req.body);
+    res.status(201).send(newFav);
   } catch (e) {
-    res.status(500).send('server error', error);
+    res.status(500).send('server error', e);
   }
 }
 
@@ -59,7 +60,7 @@ app.get('*', (request, response) => {
 });
 
 // ERROR
-app.use((error, request, response, next) => {
+app.use((error, request, response) => {
   response.status(500).send(error.message);
 });
 
