@@ -1,12 +1,12 @@
 'use strict';
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-mongoose.connect(process.env.DB_URL)
+mongoose.connect(process.env.DB_URL);
 
 const favSchema = new Schema({
-  name: {type: String},
-  description: {type: String},
-  activities:{type:[]},
+  parks: {type: String, required: true},
+  description: {type: String, required: true},
+  image:{type:String, required: false},
   plannedFor:  {type: Date},
   email: {type:String},
 });
