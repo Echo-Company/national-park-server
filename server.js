@@ -55,6 +55,39 @@ async function handlePostParks(req, res) {
   }
 }
 
+app.delete('/favs/:id', deleteFavs);
+
+async function deleteFavs(request, response, next) {
+  const id = request.params.id;
+  console.log(id);
+  try {
+    await Fav.findByIdAndDelete(id);
+    response.status(204).send('Fav Deleted');
+  }catch (error) {
+    next(error);
+  }
+}
+
+
+app.put('/favs/:id', putFavs);
+
+
+async function putFavs(request, response, next) {
+  let id = request.params.id;
+
+  try {
+    let data = request.body;
+
+    const updateFavs = await Fav.findByIdAndUpdate(id, data, {
+      new: true, overwrite: true
+    });
+    response.status(201).send(updateFavs);
+
+  } catch (error) {
+    next(error);
+  }
+}
+
 app.get('*', (request, response) => {
   response.status(404).send('Not available');
 });
